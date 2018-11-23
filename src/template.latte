@@ -97,16 +97,16 @@
 							<a n:href="view! $id"
 								n:if="$type == 'view'"
 								class="btn btn-light btn-sm {if $ajax}ajax{/if}"
-							>{$action}</a>
+							><i data-icon="{$iconView}" n:if="$iconView"></i>{if $action} {$action}{/if}</a>
 							<a n:href="edit! $id"
 								n:if="$type == 'edit'"
 								class="btn btn-success btn-sm {if $ajax}ajax{/if}"
-							><i data-icon="{$iconEdit}" class="boolean-1" n:if="$iconEdit"></i>{if $action} {$action}{/if}</a>
+							><i data-icon="{$iconEdit}" n:if="$iconEdit"></i>{if $action} {$action}{/if}</a>
 							<a n:href="delete! $id"
 								n:if="$type == 'delete'"
 								data-confirm = 'Naozaj vymazať?'
 								class="btn btn-danger btn-sm {if $ajax}ajax{/if}"
-							><i data-icon="{$iconDelete}" class="boolean-1" n:if="$iconDelete"></i>{if $action} {$action}{/if}</a>
+							><i data-icon="{$iconDelete}" n:if="$iconDelete"></i>{if $action} {$action}{/if}</a>
 						{/foreach}
 					</td>
 				</tr>

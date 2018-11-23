@@ -37,6 +37,7 @@ class MyTableFactory extends Control
 	private $iconBooleans;
 	private $iconPagerArrows;
 	private $iconDateTime;
+	private $iconView;
 	private $iconEdit;
 	private $iconDelete;
 
@@ -96,6 +97,7 @@ class MyTableFactory extends Control
 		$this->template->iconBooleans = $this->iconBooleans;
 		$this->template->iconPagerArrows = $this->iconPagerArrows;
 		$this->template->iconDateTime = $this->iconDateTime;
+		$this->template->iconView = $this->iconView;
 		$this->template->iconEdit = $this->iconEdit;
 		$this->template->iconDelete = $this->iconDelete;
 
@@ -327,6 +329,19 @@ class MyTableFactory extends Control
 	public function setIconDateTime($icon)
 	{
 		$this->iconDateTime = $icon;
+
+		return $this;
+	}
+
+
+	/**
+	 * Set Icon Delete
+	 * @param $icon
+	 * @return $this
+	 */
+	public function setIconView($icon)
+	{
+		$this->iconView = $icon;
 
 		return $this;
 	}
