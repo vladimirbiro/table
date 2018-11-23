@@ -26,10 +26,6 @@ class MyTableFactory extends Control
 	private $actions = [];
 	private $custom = [];
 	private $styles = [];
-	private $iconBooleans;
-	private $iconPagerArrows;
-	private $iconDateTime = null;
-	private $iconDelete = null;
 	private $ajax = false;
 	private $paginationPosition = null;
 	private $pages;
@@ -37,6 +33,12 @@ class MyTableFactory extends Control
 	private $actualPage = 1;
 	private $prefix;
 	private $timeFormat = [];
+
+	private $iconBooleans;
+	private $iconPagerArrows;
+	private $iconDateTime;
+	private $iconEdit;
+	private $iconDelete;
 
 	private $key;
 
@@ -94,6 +96,7 @@ class MyTableFactory extends Control
 		$this->template->iconBooleans = $this->iconBooleans;
 		$this->template->iconPagerArrows = $this->iconPagerArrows;
 		$this->template->iconDateTime = $this->iconDateTime;
+		$this->template->iconEdit = $this->iconEdit;
 		$this->template->iconDelete = $this->iconDelete;
 
 
@@ -324,6 +327,19 @@ class MyTableFactory extends Control
 	public function setIconDateTime($icon)
 	{
 		$this->iconDateTime = $icon;
+
+		return $this;
+	}
+
+
+	/**
+	 * Set Icon Delete
+	 * @param $icon
+	 * @return $this
+	 */
+	public function setIconEdit($icon)
+	{
+		$this->iconEdit = $icon;
 
 		return $this;
 	}

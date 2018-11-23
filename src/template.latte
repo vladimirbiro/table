@@ -101,7 +101,7 @@
 							<a n:href="edit! $id"
 								n:if="$type == 'edit'"
 								class="btn btn-success btn-sm {if $ajax}ajax{/if}"
-							>{$action}</a>
+							><i data-icon="{$iconEdit}" class="boolean-1" n:if="$iconEdit"></i>{if $action} {$action}{/if}</a>
 							<a n:href="delete! $id"
 								n:if="$type == 'delete'"
 								data-confirm = 'Naozaj vymazať?'
