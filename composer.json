@@ -1,6 +1,11 @@
 {
 	"name": "vladimirbiro/table",
 	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
+	"require": {
+		"nette/application": "^2.4",
+		"nette/http": "^2.4",
+		"nette/utils": "^2.4"
+	},
 	"authors": [
 		{
 			"name": "Vladimír Bíro",
