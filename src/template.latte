@@ -1,122 +1,127 @@
 {snippetArea tablebox}
-{snippet $prefix}
+	{snippet $prefix}
 
-	{var $cssAjax = ($ajax) ? ' ajax' : ''}
+		{var $cssAjax = ($ajax) ? ' ajax' : ''}
 
-	{define pagination}
-	<div class="tool-bar btn-toolbar justify-content-end">
-		<nav class="pagination" n:if="$pages > 1">
-			<ul class="pagination pagination-sm">
+		{define pagination}
+			<div class="tool-bar btn-toolbar justify-content-end">
+				<nav class="pagination" n:if="$pages > 1">
+					<ul class="pagination pagination-sm">
 
-				<li class="page-item{if $page <= 1} disabled{/}">
-					<a class="page-link{$cssAjax}" n:href="rePage! $page-1" tabindex="-1"><i data-icon="{$iconPagerArrows['left']}"></i></a>
-				</li>
+						<li class="page-item{if $page <= 1} disabled{/}">
+							<a class="page-link{$cssAjax}" n:href="rePage! $page-1" tabindex="-1"><i data-icon="{$iconPagerArrows['left']}"></i></a>
+						</li>
 
-				{var $left = $page - $round >= 1 ? $page - $round : 1}
-				{var $right = $page + $round <= $pages ? $page + $round : $pages}
+						{var $left = $page - $round >= 1 ? $page - $round : 1}
+						{var $right = $page + $round <= $pages ? $page + $round : $pages}
 
-				<li class="page-item" n:if="$left > 1"><a class="page-link{$cssAjax}" n:href="rePage! 1">1</a></li>
+						<li class="page-item" n:if="$left > 1"><a class="page-link{$cssAjax}" n:href="rePage! 1">1</a></li>
 
-				<li class="page-item disabled" n:if="$left > 2">
-					<span class="page-link" href="#">...</span>
-				</li>
+						<li class="page-item disabled" n:if="$left > 2">
+							<span class="page-link" href="#">...</span>
+						</li>
 
-				{for $i = $left; $i <= $right; $i++}
-					{if $i == $page}
-						<li class="page-item active"><span class="page-link">{$i}</span></li>
-					{else}
-						<li class="page-item"><a class="page-link{$cssAjax}" n:href="rePage! $i">{$i}</a></li>
-					{/}
-				{/}
+						{for $i = $left; $i <= $right; $i++}
+							{if $i == $page}
+								<li class="page-item active"><span class="page-link">{$i}</span></li>
+							{else}
+								<li class="page-item"><a class="page-link{$cssAjax}" n:href="rePage! $i">{$i}</a></li>
+							{/}
+						{/}
 
-				<li class="page-item disabled" n:if="$right < $pages - 1">
-					<span class="page-link">...</span>
-				</li>
+						<li class="page-item disabled" n:if="$right < $pages - 1">
+							<span class="page-link">...</span>
+						</li>
 
-				<li class="page-item" n:if="$right < $pages"><a class="page-link{$cssAjax}" n:href="rePage! $pages">{$pages}</a></li>
+						<li class="page-item" n:if="$right < $pages"><a class="page-link{$cssAjax}" n:href="rePage! $pages">{$pages}</a></li>
 
-				<li class="page-item{if $page >= $pages} disabled{/}">
-					<a class="page-link{$cssAjax}" n:href="rePage! $page+1"><i data-icon="{$iconPagerArrows['right']}"></i></a>
-				</li>
+						<li class="page-item{if $page >= $pages} disabled{/}">
+							<a class="page-link{$cssAjax}" n:href="rePage! $page+1"><i data-icon="{$iconPagerArrows['right']}"></i></a>
+						</li>
 
-			</ul>
-		</nav>
-	</div>
-	{/define}
+					</ul>
+				</nav>
+			</div>
+		{/define}
 
-	{if $paginationPosition == null || $paginationPosition == 'top'}
-		{include pagination}
-	{/if}
+		{if $paginationPosition == null || $paginationPosition == 'top'}
+			{include pagination}
+		{/if}
 
-	<div class="list my-2">
-		<table class="table table-sm table-bordered table-striped">
-			<colgroup n:if="$colGroup">
-				<col n:class="isset($colGroup[$key]) ? $colGroup[$key]" n:foreach="$columns as $key => $column">
-				<col n:if="$actions" n:class="$colGroup['actions']">
-			</colgroup>
-			<thead>
+		<div class="list my-2">
+			<table class="table table-sm table-bordered table-striped">
+				<colgroup n:if="$colGroup">
+					<col n:class="isset($colGroup[$key]) ? $colGroup[$key]" n:foreach="$columns as $key => $column">
+					<col n:if="$actions && isset($colGroup['actions'])" n:class="$colGroup['actions']">
+				</colgroup>
+				<thead>
 				<tr>
 					<th n:foreach="$columns as $column">
 						{$column}
 					</th>
 					<th n:if="$actions"></th>
 				</tr>
-			</thead>
-			<tbody>
+				</thead>
+				<tbody>
 				<tr n:foreach="$dataSource as $id => $item">
 					<td n:foreach="$columns as $key => $column" n:class="(isset($styles[$key])) ? $styles[$key]">
 						{switch $types[$key]}
 							{case text}
-								{* text *}
-								{$item[$key]|noescape}
+							{* text *}
+							{$item[$key]|noescape}
 							{case link}
-								{* Link *}
-								<a class="{$cssAjax}" n:href="link! $id"><strong>{$item[$key]|noescape}</strong></a>
-							{case boolean}
-								{* Boolean *}
-								{if $item[$key] == 1 || $item[$key] === true}
-									<i data-icon="{$iconBooleans[1]}" class="boolean-1" n:if="$iconBooleans"></i>
-									{if !$iconBooleans}<span class="boolean-1">Yes</span>{/if}
-								{else}
-									<i data-icon="{$iconBooleans[0]}" class="boolean-0" n:if="$iconBooleans"></i>
-									{if !$iconBooleans}<span class="boolean-0">No</span>{/if}
-								{/if}
-							{case datetime}
-								{* DateTime *}
-								<i n:if="$iconDateTime" data-icon="{$iconDateTime}" class="tablebox-calendar"></i>{$item[$key]|date:$timeFormat[$key]}
-							{case price}
-								{* Price *}
-								{$item[$key]|number:2:',':' '} &euro;
+							{* Link *}
+							<a class="{$cssAjax}" n:href="link! $id"><strong>{$item[$key]|noescape}</strong></a>
+						{case boolean}
+							{* Boolean *}
+							{if $item[$key] == 1 || $item[$key] === true}
+								<i data-icon="{$iconBooleans[1]}" class="boolean-1" n:if="$iconBooleans"></i>
+								{if !$iconBooleans}<span class="boolean-1">Yes</span>{/if}
+							{else}
+								<i data-icon="{$iconBooleans[0]}" class="boolean-0" n:if="$iconBooleans"></i>
+								{if !$iconBooleans}<span class="boolean-0">No</span>{/if}
+							{/if}
+						{case datetime}
+							{* DateTime *}
+						<i n:if="$iconDateTime" data-icon="{$iconDateTime}" class="tablebox-calendar"></i>{$item[$key]|date:$timeFormat[$key]}
+						{case price}
+							{* Price *}
+						{$item[$key]|number:2:',':' '} &euro;
 							{default}
-								{* Default *}
-								{$item[$key]|noescape}
+							{* Default *}
+							{$item[$key]|noescape}
 						{/switch}
 					</td>
 					<td n:if="$actions" class="text-center flex-nowrap">
 						{foreach $actions as $type => $action}
 							<a n:href="view! $id"
-								n:if="$type == 'view'"
-								class="btn btn-light btn-sm {if $ajax}ajax{/if}"
+									n:if="$type == 'view'"
+									class="btn btn-light btn-sm {if $ajax}ajax{/if}"
 							><i data-icon="{$iconView}" n:if="$iconView"></i>{if $action} {$action}{/if}</a>
 							<a n:href="edit! $id"
-								n:if="$type == 'edit'"
-								class="btn btn-success btn-sm {if $ajax}ajax{/if}"
+									n:if="$type == 'edit'"
+									class="btn btn-success btn-sm {if $ajax}ajax{/if}"
 							><i data-icon="{$iconEdit}" n:if="$iconEdit"></i>{if $action} {$action}{/if}</a>
 							<a n:href="delete! $id"
-								n:if="$type == 'delete'"
-								data-confirm = 'Naozaj vymazať?'
-								class="btn btn-danger btn-sm {if $ajax}ajax{/if}"
+									n:if="$type == 'delete'"
+									data-confirm = 'Naozaj vymazať?'
+									class="btn btn-danger btn-sm {if $ajax}ajax{/if}"
 							><i data-icon="{$iconDelete}" class="boolean-1" n:if="$iconDelete"></i>{if $action} {$action}{/if}</a>
 						{/foreach}
 					</td>
 				</tr>
-			</tbody>
-		</table>
-	</div>
+				<tr n:if="$emptyMessage && count($dataSource) <= 0">
+					<td colspan="{count($columns) + ($actions ? 1 : 0)}" class="text-center empty-message">
+						{$emptyMessage}
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
 
-	{if $paginationPosition == null || $paginationPosition == 'bottom'}
-		{include pagination}
-	{/if}
+		{if $paginationPosition == null || $paginationPosition == 'bottom'}
+			{include pagination}
+		{/if}
 
-{/snippet}
+	{/snippet}
 {/snippetArea}

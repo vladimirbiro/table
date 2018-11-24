@@ -33,6 +33,7 @@ class MyTableFactory extends Control
 	private $actualPage = 1;
 	private $prefix;
 	private $timeFormat = [];
+	private $emptyMessage = null;
 
 	private $iconBooleans;
 	private $iconPagerArrows;
@@ -101,6 +102,8 @@ class MyTableFactory extends Control
 		$this->template->iconEdit = $this->iconEdit;
 		$this->template->iconDelete = $this->iconDelete;
 
+		$this->template->emptyMessage = $this->emptyMessage;
+
 
 		$this->template->render(__DIR__ . '/template.latte');
 	}
@@ -131,7 +134,7 @@ class MyTableFactory extends Control
 			$this->data = $data;
 			$this->pages = ceil(count($data) / $this->rowsOnPage);
 		}
-		 $dataSource = $this->data->limit($this->rowsOnPage, ($this->rowsOnPage*$this->getActualPage()) - $this->rowsOnPage);
+		$dataSource = $this->data->limit($this->rowsOnPage, ($this->rowsOnPage*$this->getActualPage()) - $this->rowsOnPage);
 
 		$row = [];
 		foreach ($dataSource as $key => $item) {
@@ -490,6 +493,19 @@ class MyTableFactory extends Control
 		foreach ($this->data as $id => $item) {
 			$this->dataSource[$id][$this->key] = $renderer($item);
 		}
+
+		return $this;
+	}
+
+
+	/**
+	 * Set - Empty Message
+	 * @param $message
+	 * @return $this
+	 */
+	public function setEmptyMessage($message)
+	{
+		$this->emptyMessage = $message;
 
 		return $this;
 	}
