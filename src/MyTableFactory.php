@@ -46,6 +46,7 @@ class MyTableFactory extends Control
 	public $onLink;
 	public $onView;
 	public $onEdit;
+	public $onDelete;
 	public $onRePage;
 
 
@@ -464,7 +465,7 @@ class MyTableFactory extends Control
 			$this->redrawControl('tablebox');
 		}
 
-		return $item;
+		$this->onDelete($item);
 	}
 
 
