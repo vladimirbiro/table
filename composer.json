@@ -4,7 +4,9 @@
 	"require": {
 		"nette/application": "^2.4",
 		"nette/http": "^2.4",
-		"nette/utils": "^2.4"
+		"nette/utils": "^2.4",
+		"nette/database": "^2.4",
+		"latte/latte": "^2.4"
 	},
 	"authors": [
 		{
@@ -15,5 +17,5 @@
 	"autoload": {
 		"classmap": ["src/"]
 	},
-	"minimum-stability": "dev"
+	"minimum-stability": "stable"
 }

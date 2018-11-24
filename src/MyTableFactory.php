@@ -46,7 +46,6 @@ class MyTableFactory extends Control
 	public $onLink;
 	public $onView;
 	public $onEdit;
-	public $onDelete;
 	public $onRePage;
 
 
@@ -423,14 +422,22 @@ class MyTableFactory extends Control
 
 
 	/**
+	 * Handle Link
+	 * @param $id
+	 */
+	public function handleLink($id)
+	{
+		$this->onLink((int) $id);
+	}
+
+
+	/**
 	 * Handle View
 	 * @param $id
-	 * @return $this
 	 */
 	public function handleView($id)
 	{
 		$this->onView((int) $id);
-		return $this;
 	}
 
 
@@ -450,22 +457,14 @@ class MyTableFactory extends Control
 	 */
 	public function handleDelete($id)
 	{
-		$this->data->get($id)->delete();
+		$item = $this->data->get($id)->delete();
 
 		if ($this->getPresenter()->isAjax()) {
 			$this->setDataSource();
 			$this->redrawControl('tablebox');
 		}
-	}
 
-
-	/**
-	 * Handle Link
-	 * @param $id
-	 */
-	public function handleLink($id)
-	{
-		$this->onLink((int) $id);
+		return $item;
 	}
 
 
