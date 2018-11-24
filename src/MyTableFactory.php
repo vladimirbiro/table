@@ -458,14 +458,14 @@ class MyTableFactory extends Control
 	 */
 	public function handleDelete($id)
 	{
-		$item = $this->data->get($id)->delete();
+		$item = $this->data->get($id);
+		$this->onDelete($item);
+		$item->delete();
 
 		if ($this->getPresenter()->isAjax()) {
 			$this->setDataSource();
 			$this->redrawControl('tablebox');
 		}
-
-		$this->onDelete($item);
 	}
 
 
