@@ -521,5 +521,7 @@ class MyTableFactory extends Control
 	public function setCustomDelete($state)
 	{
 		$this->customDelete = $state;
+
+		return $this;
 	}
 }
