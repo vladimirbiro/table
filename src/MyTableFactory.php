@@ -512,4 +512,14 @@ class MyTableFactory extends Control
 
 		return $this;
 	}
+
+
+	/**
+	 * Set - Custom Delete
+	 * @param $state
+	 */
+	public function setCustomDelete($state)
+	{
+		$this->customDelete = $state;
+	}
 }
