@@ -464,7 +464,7 @@ class MyTableFactory extends Control
 	{
 		$item = $this->data->get($id);
 		$this->onDelete($item);
-		if ($this->customDelete !== false) {
+		if ($this->customDelete !== true) {
 			$item->delete();
 		}
 
@@ -517,6 +517,7 @@ class MyTableFactory extends Control
 	/**
 	 * Set - Custom Delete
 	 * @param $state
+	 * @return $this
 	 */
 	public function setCustomDelete($state)
 	{
