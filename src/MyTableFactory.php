@@ -34,6 +34,7 @@ class MyTableFactory extends Control
 	private $prefix;
 	private $timeFormat = [];
 	private $emptyMessage = null;
+	private $customDelete = false;
 
 	private $iconBooleans;
 	private $iconPagerArrows;
@@ -463,7 +464,9 @@ class MyTableFactory extends Control
 	{
 		$item = $this->data->get($id);
 		$this->onDelete($item);
-		$item->delete();
+		if ($this->customDelete !== false) {
+			$item->delete();
+		}
 
 		if ($this->getPresenter()->isAjax()) {
 			$this->setDataSource();
