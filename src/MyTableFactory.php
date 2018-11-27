@@ -5,7 +5,9 @@ use Nette\Application\UI\Control;
 use Nette\Http\Session;
 use Nette\Http\SessionSection;
 use Nette\Utils\ArrayHash;
+use Nette\Utils\DateTime;
 use Nette\Utils\Strings;
+use Tracy\Debugger;
 
 class MyTableFactory extends Control
 {
@@ -33,6 +35,7 @@ class MyTableFactory extends Control
 	private $actualPage = 1;
 	private $prefix;
 	private $timeFormat = [];
+	private $dataRenderer = [];
 	private $emptyMessage = null;
 	private $customDelete = false;
 
@@ -72,13 +75,11 @@ class MyTableFactory extends Control
 			$this->error('Nastavte prefix tabuľky');
 		}
 
-		if (!$this->dataSource) {
+		if (!$this->data) {
 			$this->error('Žiadne dáta v tabluľke');
 		}
 
-		if ($this->getActualPage() > $this->pages) {
-			$this->setActualPage(1);
-		}
+		$this->mergeData();
 
 		$this->template->dataSource = $this->dataSource;
 		$this->template->columns = ArrayHash::from($this->columns);
@@ -135,14 +136,7 @@ class MyTableFactory extends Control
 			$this->data = $data;
 			$this->pages = ceil(count($data) / $this->rowsOnPage);
 		}
-		$dataSource = $this->data->limit($this->rowsOnPage, ($this->rowsOnPage*$this->getActualPage()) - $this->rowsOnPage);
 
-		$row = [];
-		foreach ($dataSource as $key => $item) {
-			$row[$key] = $item->toArray();
-		}
-
-		$this->dataSource = ArrayHash::from($row);
 		return $this;
 	}
 
@@ -462,14 +456,16 @@ class MyTableFactory extends Control
 	 */
 	public function handleDelete($id)
 	{
+		unset($this->data[$id]);
+
 		$item = $this->data->get($id);
 		$this->onDelete($item);
+
 		if ($this->customDelete !== true) {
 			$item->delete();
 		}
 
 		if ($this->getPresenter()->isAjax()) {
-			$this->setDataSource();
 			$this->redrawControl('tablebox');
 		}
 	}
@@ -482,7 +478,6 @@ class MyTableFactory extends Control
 	public function handleRePage(int $p)
 	{
 		$this->setActualPage($p);
-		$this->setDataSource();
 		$this->redrawControl('tablebox');
 	}
 
@@ -494,7 +489,7 @@ class MyTableFactory extends Control
 	public function setRenderer(callable $renderer)
 	{
 		foreach ($this->data as $id => $item) {
-			$this->dataSource[$id][$this->key] = $renderer($item);
+			$this->dataRenderer[$id][$this->key] = $renderer($item);
 		}
 
 		return $this;
@@ -524,5 +519,26 @@ class MyTableFactory extends Control
 		$this->customDelete = $state;
 
 		return $this;
+	}
+
+
+	private function mergeData()
+	{
+		if ($this->getActualPage() > $this->pages) {
+			$this->setActualPage(1);
+		}
+
+		$this->dataSource = $this->data->limit($this->rowsOnPage, ($this->rowsOnPage*$this->getActualPage()) - $this->rowsOnPage);
+
+		$row = [];
+		foreach ($this->data as $key => $item) {
+			$row[$key] = $item->toArray();
+
+			foreach ($this->dataRenderer[$key] as $k => $i) {
+				$row[$key][$k] = $i;
+			}
+		}
+
+		$this->dataSource = ArrayHash::from($row);
 	}
 }
