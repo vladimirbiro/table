@@ -534,8 +534,10 @@ class MyTableFactory extends Control
 		foreach ($this->data as $key => $item) {
 			$row[$key] = $item->toArray();
 
-			foreach ($this->dataRenderer[$key] as $k => $i) {
-				$row[$key][$k] = $i;
+			if (isset($this->dataRenderer[$key])) {
+				foreach ($this->dataRenderer[$key] as $k => $i) {
+					$row[$key][$k] = $i;
+				}
 			}
 		}
 
