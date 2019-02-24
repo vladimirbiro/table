@@ -38,6 +38,7 @@ class MyTableFactory extends Control
 	private $dataRenderer = [];
 	private $emptyMessage = null;
 	private $customDelete = false;
+	private $adminLock = [];
 
 	private $iconBooleans;
 	private $iconPagerArrows;
@@ -91,6 +92,7 @@ class MyTableFactory extends Control
 		$this->template->ajax = $this->ajax;
 		$this->template->prefix = $this->prefix;
 		$this->template->timeFormat = $this->timeFormat;
+		$this->template->adminLock = $this->adminLock;
 
 		$this->template->paginationPosition = $this->paginationPosition;
 		$this->template->pages = $this->pages;
@@ -259,7 +261,8 @@ class MyTableFactory extends Control
 	/**
 	 * Actions (Buttons)
 	 * @param $key
-	 * @param $name
+	 * @param null $name
+	 * @param bool $allow
 	 * @return $this
 	 */
 	public function addAction($key, $name = null)
@@ -456,6 +459,10 @@ class MyTableFactory extends Control
 	 */
 	public function handleDelete($id)
 	{
+		if ($this->adminLock[$id] === true) {
+			return;
+		}
+
 		unset($this->data[$id]);
 
 		$item = $this->data->get($id);
@@ -504,6 +511,22 @@ class MyTableFactory extends Control
 	public function setEmptyMessage($message)
 	{
 		$this->emptyMessage = $message;
+
+		return $this;
+	}
+
+
+	/**
+	 * @param callable $renderer
+	 * @return $this
+	 */
+	public function setAdminLock(callable $renderer)
+	{
+		foreach ($this->data as $id => $item) {
+			if ($renderer($item) === true) {
+				$this->adminLock[$id] = true;
+			}
+		}
 
 		return $this;
 	}
