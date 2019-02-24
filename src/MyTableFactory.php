@@ -523,9 +523,10 @@ class MyTableFactory extends Control
 	public function setAdminLock(callable $renderer)
 	{
 		foreach ($this->data as $id => $item) {
-			if ($renderer($item) === true) {
-				$this->adminLock[$id] = true;
-			}
+			$this->adminLock[$id] = $renderer($item) === true
+				? true
+				: false
+			;
 		}
 
 		return $this;
