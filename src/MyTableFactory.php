@@ -459,7 +459,7 @@ class MyTableFactory extends Control
 	 */
 	public function handleDelete($id)
 	{
-		if ($this->adminLock[$id] === true) {
+		if (isset($this->adminLock[$id]) && $this->adminLock[$id] === true) {
 			return;
 		}
 
