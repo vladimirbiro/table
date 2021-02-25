@@ -223,10 +223,26 @@ class MyTableFactory extends Control
 	{
 		$this->columns[$key] = $column;
 		$this->types[$key] = (in_array($type, self::TYPES))
-			? $type
-			: 'text';
+		    ? $type
+		    : 'text';
 
 		$this->key = $key;
+
+		if (Strings::contains($key, '->')) {
+
+		    $this->setRenderer(function ($item) use ($key) {
+			$list = explode('->', $key);
+
+			$f = $item;
+
+			for ($i = 0; $i < count($list); $i++) {
+			    $f = $f[$list[$i]];
+			}
+
+			return $f;
+		    });
+
+		}
 	}
 
 
