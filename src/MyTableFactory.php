@@ -62,7 +62,6 @@ class MyTableFactory extends Control
 	 */
 	public function __construct(Session $session)
 	{
-		parent::__construct();
 		$this->session = $session;
 	}
 
