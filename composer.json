@@ -2,11 +2,11 @@
 	"name": "vladimirbiro/table",
 	"license": ["BSD-3-Clause", "GPL-2.0", "GPL-3.0"],
 	"require": {
-		"nette/application": "^2.4",
-		"nette/http": "^2.4",
-		"nette/utils": "^2.4",
-		"nette/database": "^2.4",
-		"latte/latte": "^2.4"
+		"nette/application": "^3.0",
+		"nette/http": "^3.0",
+		"nette/utils": "^3.0",
+		"nette/database": "^3.0",
+		"latte/latte": "^2.5"
 	},
 	"authors": [
 		{
