@@ -236,7 +236,7 @@ class MyTableFactory extends Control
 			$f = $item;
 
 			for ($i = 0; $i < count($list); $i++) {
-			    $f = $f[$list[$i]];
+			    $f = $f[$list[$i]] ?? null;
 			}
 
 			return $f;
