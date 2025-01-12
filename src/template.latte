@@ -86,7 +86,7 @@
 						<i n:if="$iconDateTime" data-icon="{$iconDateTime}" class="tablebox-calendar"></i>{$item[$key]|date:$timeFormat[$key]}
 						{case price}
 							{* Price *}
-						{$item[$key]|number:2:',':' '} &euro;
+						{$item[$key]|number:2,',',' '} &euro;
 							{default}
 							{* Default *}
 							{$item[$key]|noescape}
