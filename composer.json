@@ -4,7 +4,7 @@
 	"require": {
 		"nette/application": "^3.1",
 		"nette/http": "^3.1",
-		"nette/utils": "^3.1",
+		"nette/utils": "^4.0",
 		"nette/database": "^3.1",
 		"latte/latte": "^3.0"
 	},
