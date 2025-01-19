@@ -46,9 +46,10 @@
 
 		{if $paginationPosition == null || $paginationPosition == 'top'}
 			{include pagination}
+			<div class="mb-2"></div>
 		{/if}
 
-		<div class="list my-2">
+		<div class="list">
 			<table class="table table-sm table-bordered table-striped">
 				<colgroup n:if="$colGroup">
 					<col n:class="isset($colGroup[$key]) ? $colGroup[$key]" n:foreach="$columns as $key => $column">
@@ -121,6 +122,7 @@
 		</div>
 
 		{if $paginationPosition == null || $paginationPosition == 'bottom'}
+			<div class="mt-2"></div>
 			{include pagination}
 		{/if}
 
