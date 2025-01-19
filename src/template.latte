@@ -93,7 +93,7 @@
 							{$item[$key]|noescape}
 						{/switch}
 					</td>
-					<td n:if="$actions" class="text-center flex-nowrap">
+					<td n:if="$actions" n:class="(isset($styles['actions'])) ? $styles['actions']">
 						{foreach $actions as $type => $action}
 							<a n:href="view! $id"
 									n:if="$type == 'view'"
