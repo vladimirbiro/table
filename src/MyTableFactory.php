@@ -29,6 +29,7 @@ class MyTableFactory extends Control
 	private $custom = [];
 	private $styles = [];
 	private $ajax = false;
+	private $naja = false;
 	private $paginationPosition = null;
 	private $pages;
 	private $rowsOnPage = 20;
@@ -89,6 +90,7 @@ class MyTableFactory extends Control
 		$this->template->actions = $this->actions;
 		$this->template->styles = $this->styles;
 		$this->template->ajax = $this->ajax;
+		$this->template->naja = $this->naja;
 		$this->template->prefix = $this->prefix;
 		$this->template->timeFormat = $this->timeFormat;
 		$this->template->adminLock = $this->adminLock;
@@ -298,6 +300,19 @@ class MyTableFactory extends Control
 	public function setAjax($s = true)
 	{
 		$this->ajax = $s;
+
+		return $this;
+	}
+
+
+	/**
+	 * Set Naja
+	 * @param bool $s
+	 * @return $this
+	 */
+	public function setNaja($s = true)
+	{
+		$this->naja = $s;
 
 		return $this;
 	}
