@@ -1,8 +1,8 @@
 {snippetArea tablebox}
 	{snippet $prefix}
 
-		{var $cssAjax = ($ajax) ? ' ajax' : ''}
-		{var $naja = ($naja) ? ' data-naja' : ''}
+		{var $cssAjax = ($ajax) ? " ajax"|noescape : ""}
+		{var $dataNaja = ($naja) ? " data-naja"|noescape : ""}
 
 		{define pagination}
 			<div class="tool-bar btn-toolbar justify-content-end">
@@ -10,13 +10,13 @@
 					<ul class="pagination pagination-sm">
 
 						<li class="page-item{if $page <= 1} disabled{/}">
-							<a class="page-link{$cssAjax}"{$naja} n:href="rePage! $page-1"><i data-icon="{$iconPagerArrows['left']}"></i></a>
+							<a class="page-link{$cssAjax}"{$dataNaja} n:href="rePage! $page-1"><i data-icon="{$iconPagerArrows['left']}"></i></a>
 						</li>
 
 						{var $left = $page - $round >= 1 ? $page - $round : 1}
 						{var $right = $page + $round <= $pages ? $page + $round : $pages}
 
-						<li class="page-item" n:if="$left > 1"><a class="page-link{$cssAjax}"{$naja} n:href="rePage! 1">1</a></li>
+						<li class="page-item" n:if="$left > 1"><a class="page-link{$cssAjax}"{$dataNaja} n:href="rePage! 1">1</a></li>
 
 						<li class="page-item disabled" n:if="$left > 2">
 							<span class="page-link" href="#">...</span>
@@ -26,7 +26,7 @@
 							{if $i == $page}
 								<li class="page-item active"><span class="page-link">{$i}</span></li>
 							{else}
-								<li class="page-item"><a class="page-link{$cssAjax}"{$naja} n:href="rePage! $i">{$i}</a></li>
+								<li class="page-item"><a class="page-link{$cssAjax}"{$dataNaja} n:href="rePage! $i">{$i}</a></li>
 							{/}
 						{/}
 
@@ -34,10 +34,10 @@
 							<span class="page-link">...</span>
 						</li>
 
-						<li class="page-item" n:if="$right < $pages"><a class="page-link{$cssAjax}"{$naja} n:href="rePage! $pages">{$pages}</a></li>
+						<li class="page-item" n:if="$right < $pages"><a class="page-link{$cssAjax}"{$dataNaja} n:href="rePage! $pages">{$pages}</a></li>
 
 						<li class="page-item{if $page >= $pages} disabled{/}">
-							<a class="page-link{$cssAjax}"{$naja} n:href="rePage! $page+1"><i data-icon="{$iconPagerArrows['right']}"></i></a>
+							<a class="page-link{$cssAjax}"{$dataNaja} n:href="rePage! $page+1"><i data-icon="{$iconPagerArrows['right']}"></i></a>
 						</li>
 
 					</ul>
@@ -73,7 +73,7 @@
 							{$item[$key]|noescape}
 							{case link}
 							{* Link *}
-							<a class="{$cssAjax}"{$naja} n:href="link! $id"><strong>{$item[$key]|noescape}</strong></a>
+							<a class="{$cssAjax}"{$dataNaja} n:href="link! $id"><strong>{$item[$key]|noescape}</strong></a>
 						{case boolean}
 							{* Boolean *}
 							{if $item[$key] == 1 || $item[$key] === true}
@@ -98,16 +98,16 @@
 						{foreach $actions as $type => $action}
 							<a n:href="view! $id"
 									n:if="$type == 'view'"
-									class="btn btn-light btn-sm {if $ajax}ajax{/if}"{$naja}
+									class="btn btn-light btn-sm{if $ajax} ajax{/if}"{$dataNaja}
 							><i data-icon="{$iconView}" n:if="$iconView"></i>{if $action} {$action}{/if}</a>
 							<a n:href="edit! $id"
 									n:if="$type == 'edit'"
-									class="btn btn-success btn-sm {if $ajax}ajax{/if}"{$naja}
+									class="btn btn-success btn-sm{if $ajax} ajax{/if}"{$dataNaja}
 							><i data-icon="{$iconEdit}" n:if="$iconEdit"></i>{if $action} {$action}{/if}</a>
 							<a n:href="delete! $id"
 									n:if="$type == 'delete'"
 									data-confirm = 'Naozaj vymazať?'
-									class="btn btn-danger btn-sm{if $ajax} ajax{/if}{if isset($adminLock[$id])} disabled{/if}"{$naja}
+									class="btn btn-danger btn-sm{if $ajax} ajax{/if}{if isset($adminLock[$id])} disabled{/if}"{$dataNaja}
 									{if $ajax}data-ajax-off="history"{/if}
 									{if $naja}data-naja-history="off"{/if}
 							><i data-icon="{$iconDelete}" class="boolean-1" n:if="$iconDelete"></i>{if $action} {$action}{/if}</a>
